@@ -113,6 +113,7 @@ public class Mantenimiento {
                 }
             }
         }
+        //this variables save what is the services to client choose of each one 
         String machine = "";
         String functional = "";
         String calistenic = "";
@@ -128,6 +129,8 @@ public class Mantenimiento {
                 calistenic = validate[i];
             }
         }
+        //This variables count how much instructor there is in each one services, for example if in
+        //the Machine work's service there is two instructors assigned, the variable "machineWork" count two 
         int machineWork = 0;
         int functionalWork = 0;
         int calistenicWork = 0;
@@ -156,18 +159,23 @@ public class Mantenimiento {
         String findValue = "";
         String instructors = "";
         //Validate workoutMachine there is one more intructor 
-        if (machineWork > 1 && "Ejercicios con maquinas".equals(machine)) {
-            for (int i = 0; i < MachineWorkout.length; i++) {
+        if (machineWork > 1 && "Ejercicios con maquinas".equals(machine)) { //if counting machineWork is greater of one , its say
+            //that there is more of one instructor in Machine WorkOut and machine is "Ejercicios con Maquina" validated that was choose for the client
+            //and ente to the "true if", if not so to do the "if else"
+            for (int i = 0; i < MachineWorkout.length; i++) { 
                 if (MachineWorkout[i] != null) {
-                    findValue = findValue + i + ". " + MachineWorkout[i] + "\n";
+                    findValue = findValue + i + ". " + MachineWorkout[i] + "\n";  //concatenation of the results
+                    /*Example:  0. Carlos Segura  -> First result
+                                      1. Pedro Morera   -> Second result*/
                 }
             }
             int option = Integer.parseInt(JOptionPane.showInputDialog(null, "Hay mas de 1 entrenador en Ejercicios de maquinas, "
                     + "debe de seleccionar a uno para que sea entrenador de este cliente: \n" + findValue));
-            instructors = instructors + "Entrenador de Ejercicio en Maquina: " + MachineWorkout[option] + "\n";
-        } else if (machineWork == 1 && "Ejercicios con maquinas".equals(machine)) {
+            instructors = instructors + "Entrenador de Ejercicio en Maquina: " + MachineWorkout[option] + "\n"; /*instructor's concatenation save 
+                                                                                                                                                                    the option with line break for more order*/
+        } else if (machineWork == 1 && "Ejercicios con maquinas".equals(machine)) { //if only one instructor in this service, dont ask, only save this
             instructors = instructors + "Entrenador de Ejercicio en Maquina: " + MachineWorkout[0] + "\n";
-        } else if (machineWork == 0) {
+        } else if (machineWork == 0) { //if no one there is assigned in this service or the client dont choose this service so dont do nothing
             System.out.println("");
         }
         findValue = "";
@@ -219,11 +227,9 @@ public class Mantenimiento {
         } else if (calistenicWork == 0) {
             System.out.println("");
         }
-        ImageIcon icon = new ImageIcon("C:\\Users\\mejia\\OneDrive\\Documentos\\NetBeansProjects\\proyectoVale\\src\\img\\ListoOk.png");
+        ImageIcon icon = new ImageIcon("src\\img\\ListoOk.png");
         for (int i = 0; i < customer.length; i++) {
-            System.out.println("Entro a la primera");
             if (customer[i] == null) {
-                System.out.println("Va a guardar");
                 customer[i] = new Cliente(name, lastname, ID, numberCountCode, validate, "Activo", instructors);
                 String ser = "";
                 Cliente client = customer[i];
