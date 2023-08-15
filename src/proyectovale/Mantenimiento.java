@@ -11,6 +11,7 @@ public class Mantenimiento {
 //  recepcionClientes = new Recepcion_Clientes(espacio);
     Object[] servicesOptions = {"Ejercicios con maquinas", "Ejercicios funcionales", "Aerobicos", "Calistenia"};
     int numberCountCode = 0;
+    Modificaciones modifi = new Modificaciones();
 
     public void singUpACustomer() {
         String[] MachineWorkout = new String[3];
@@ -162,7 +163,7 @@ public class Mantenimiento {
         if (machineWork > 1 && "Ejercicios con maquinas".equals(machine)) { //if counting machineWork is greater of one , its say
             //that there is more of one instructor in Machine WorkOut and machine is "Ejercicios con Maquina" validated that was choose for the client
             //and ente to the "true if", if not so to do the "if else"
-            for (int i = 0; i < MachineWorkout.length; i++) { 
+            for (int i = 0; i < MachineWorkout.length; i++) {
                 if (MachineWorkout[i] != null) {
                     findValue = findValue + i + ". " + MachineWorkout[i] + "\n";  //concatenation of the results
                     /*Example:  0. Carlos Segura  -> First result
@@ -171,7 +172,8 @@ public class Mantenimiento {
             }
             int option = Integer.parseInt(JOptionPane.showInputDialog(null, "Hay mas de 1 entrenador en Ejercicios de maquinas, "
                     + "debe de seleccionar a uno para que sea entrenador de este cliente: \n" + findValue));
-            instructors = instructors + "Entrenador de Ejercicio en Maquina: " + MachineWorkout[option] + "\n"; /*instructor's concatenation save 
+            instructors = instructors + "Entrenador de Ejercicio en Maquina: " + MachineWorkout[option] + "\n";
+            /*instructor's concatenation save 
                                                                                                                                                                     the option with line break for more order*/
         } else if (machineWork == 1 && "Ejercicios con maquinas".equals(machine)) { //if only one instructor in this service, dont ask, only save this
             instructors = instructors + "Entrenador de Ejercicio en Maquina: " + MachineWorkout[0] + "\n";
@@ -195,7 +197,6 @@ public class Mantenimiento {
             System.out.println("");
         }
         findValue = "";
-        System.out.println(InAerobics.length);
         //Validate Aerobics there is one more intructor 
         if (aerobicWork > 1 && "Aerobicos".equals(aerobic)) {
             for (int i = 0; i < InAerobics.length; i++) {
@@ -320,6 +321,7 @@ public class Mantenimiento {
             }
         }
     }
+//Initializacion of instructor, when we start the program, already there this instructor
 
     public void instructorAuto() {
         String[] vector = {"Ejercicios con maquinas", "Calistenia"};
@@ -331,4 +333,48 @@ public class Mantenimiento {
         String[] vector3 = {"Ejercicios con maquinas", "Ejercicios funcionales"};
         instructor[3] = new Instructor("Pantheon", "El Aspecto", "4", vector3);
     }
+
+    // Here we going to make the metod that modifier the customer
+    public void modifierTheCustomer() {
+        boolean findCustomer = false;
+        int vectorPosition = 0;
+        String idClient = JOptionPane.showInputDialog(null, "ID del cliente: ");
+        for (int i = 0; i < customer.length; i++) {
+            if (customer[i] != null) {
+                if (customer[i].getID().equals(idClient)) {
+                    findCustomer = true;
+                    vectorPosition = i;
+                    JOptionPane.showMessageDialog(null, "Cliente encontrado con el ID " + idClient+ ": \n" +customer[i].getName() + " " + customer[i].getLastname());
+                }
+            }
+        }
+        if (findCustomer) {
+            int option = Integer.parseInt(JOptionPane.showInputDialog(null, "¿Que espacio desea modificar del cliente? "
+                    + "\n1. Servicios inscritos"
+                    + "\n2. Actividad del cliente"
+                    + "\n3. Cambiar instructor"));
+            modifi.modificarcliente(option, customer, vectorPosition, instructor, servicesVector);
+            
+//            System.out.println("Verificar cambios");
+//            Cliente clieente = customer[vectorPosition];
+//            String[] guarda = clieente.getServiceSignedUp();
+//            for (String string : guarda) {
+//                System.out.println(string);
+//            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Lo siento, no se encontro ningun cliente con"
+                    + "el siguiente ID: \n" + idClient);
+        }
+
+    }
+
+    // Here we going to make the metod that modifier the Intructor
+    public void modifierTheInstructor() {
+        //No way => No puede ser
+    }
+
+    // Here we going to make the metod that modifier the Service
+    public void modifierTheService() {
+    }
+
 }

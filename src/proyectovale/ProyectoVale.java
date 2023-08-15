@@ -28,7 +28,7 @@ public class ProyectoVale {
                     
                     break;
                 case 4:
-                    
+                        mante.modifierTheCustomer();
                     break;
                 case 5: 
                     

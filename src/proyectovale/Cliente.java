@@ -5,6 +5,7 @@ public class Cliente extends Persona{
     String[] serviceSignedUp;
     String state; 
     String instructor;
+
     public Cliente(String name, String lastname, String ID, int codNumber, String[] serSigUp, String state, String instructor) {
         super(name, lastname, ID);
         this.codeNumber = codNumber; 
