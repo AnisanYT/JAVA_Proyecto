@@ -9,11 +9,13 @@ public class ProyectoVale {
         Mantenimiento mante = new Mantenimiento();
         mante.registerServices();
         mante.instructorAuto();
+        mante.customerAuto();
         int option = 0;
         do {
             try {
                 option = Integer.parseInt(JOptionPane.showInputDialog("Eliga una opción: "
-                        + "\n1. Registrar cliente\n2. Registrar instructor\n3. Mantenimiento servicios\n4. Modificaciones\n5. Listados"));
+                        + "\n1. Registrar cliente\n2. Registrar instructor\n3. Modificaciones en Servicios e Instructores"
+                        + "\n4. Modificaciones de clientes\n5. Realizar una rifa\n6. Listados\n7. Salir"));
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Inserte una opción correcta.");
             }
@@ -25,16 +27,18 @@ public class ProyectoVale {
                     mante.registerInstructor();
                     break;
                 case 3:
-                    
+                    mante.modifierTheInstructorOrService();
                     break;
                 case 4:
-                        mante.modifierTheCustomer();
+                    mante.modifierTheCustomer();
                     break;
-                case 5: 
-                    
+                case 5:
+                    mante.toDoRifa();
                     break;
+                case 6:
+                    mante.listCustomers();
                 default:
-                    throw new AssertionError();
+                    JOptionPane.showMessageDialog(null, "Inserte una opcion valida.");
             }
 
         } while (seguir == 0);

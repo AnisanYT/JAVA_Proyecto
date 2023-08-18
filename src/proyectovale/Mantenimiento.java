@@ -6,11 +6,12 @@ import javax.swing.JOptionPane;
 public class Mantenimiento {
 
     Instructor[] instructor = new Instructor[10];
-    Cliente customer[] = new Cliente[10];
+    Cliente customer[] = new Cliente[20];
     servicios servicesVector[] = new servicios[4];
+    DoRifa dr = new DoRifa();
 //  recepcionClientes = new Recepcion_Clientes(espacio);
     Object[] servicesOptions = {"Ejercicios con maquinas", "Ejercicios funcionales", "Aerobicos", "Calistenia"};
-    int numberCountCode = 0;
+    int numberCountCode = 1;
     Modificaciones modifi = new Modificaciones();
 
     public void singUpACustomer() {
@@ -23,8 +24,27 @@ public class Mantenimiento {
         String validate[] = new String[servicesVector.length];
         String name = JOptionPane.showInputDialog("Nombre del cliente: ");
         String lastname = JOptionPane.showInputDialog("Apellido: ");
-        String ID = JOptionPane.showInputDialog("ID: ");
+        String ID = "";
 
+        boolean yes = false;
+        boolean equal = false;
+        do {
+            ID = JOptionPane.showInputDialog("ID: ");
+            equal = false;
+            for (int i = 0; i < customer.length; i++) {
+                if (customer[i] != null) {
+                    if (ID.equals(customer[i].getID())) {
+                        equal = true;
+                    }
+                }
+            }
+            if (equal == true) {
+                JOptionPane.showMessageDialog(null, "Ya hay un cliente con ese ID.");
+            } else {
+                yes = true;
+            }
+
+        } while (yes != true);
         do {
             int counter = 0;
             Object serviceChoose = JOptionPane.showInputDialog(null, "Escoga el servicio que desea: ", "Escoga", JOptionPane.QUESTION_MESSAGE, null, servicesOptions, servicesOptions[0]);
@@ -230,6 +250,15 @@ public class Mantenimiento {
         }
         ImageIcon icon = new ImageIcon("src\\img\\ListoOk.png");
         for (int i = 0; i < customer.length; i++) {
+            if (customer[i] != null) {
+                System.out.println(customer[i].getCodeNumber());
+                if (customer[i].getCodeNumber() == numberCountCode) {
+                    numberCountCode = numberCountCode + 1;
+                }
+            }
+
+        }
+        for (int i = 0; i < customer.length; i++) {
             if (customer[i] == null) {
                 customer[i] = new Cliente(name, lastname, ID, numberCountCode, validate, "Activo", instructors);
                 String ser = "";
@@ -264,11 +293,31 @@ public class Mantenimiento {
 
     public void registerInstructor() {
         boolean next = true;
+        boolean yes = false;
+        boolean equal = false;
         String serviceChooseForUser = "";
         String[] vectorServicesAssigned = new String[3];
+        String ID = "";
         String name = JOptionPane.showInputDialog(null, "Nombre del instructor: ");
-        String ID = JOptionPane.showInputDialog(null, "ID del instructor: ");
         String lastName = JOptionPane.showInputDialog(null, "Apellido: ");
+        do {
+            ID = JOptionPane.showInputDialog(null, "ID del instructor: ");
+            equal = false;
+            for (int i = 0; i < instructor.length; i++) {
+                if (instructor[i] != null) {
+                    if (ID.equals(instructor[i].getID())) {
+                        equal = true;
+                    }
+                }
+            }
+            if (equal == true) {
+                JOptionPane.showMessageDialog(null, "Ya hay un instructor con ese ID.");
+            } else {
+                yes = true;
+            }
+
+        } while (yes != true);
+
         do {
             int assignedService = Integer.parseInt(JOptionPane.showInputDialog("¿Qué servicio tendra asiganado este instructor?"
                     + "\n1. " + servicesVector[0].getName() + "\n2. " + servicesVector[1].getName() + "\n3. " + servicesVector[2].getName() + "\n4. " + servicesVector[3].getName() + "\n5. Salir"));
@@ -311,7 +360,10 @@ public class Mantenimiento {
                 Instructor instruct = instructor[i];
                 String[] serviceAssigned = instruct.getServiceAssigned();
                 for (String servicio : serviceAssigned) {
-                    ser = ser + servicio + ", ";
+                    if (servicio != null) {
+                        ser = ser + servicio + "\n";
+                    }
+
                 }
 
                 JOptionPane.showMessageDialog(null, "Instructor registrado con los siguientes datos: "
@@ -325,13 +377,28 @@ public class Mantenimiento {
 
     public void instructorAuto() {
         String[] vector = {"Ejercicios con maquinas", "Calistenia"};
-        instructor[0] = new Instructor("Daniel", "Mejia", "1", vector);
+        instructor[0] = new Instructor("Daniel", "Mora", "1", vector);
         String[] vector1 = {"Aerobicos", "Calistenia"};
-        instructor[1] = new Instructor("Joset", "Bebecito", "2", vector1);
+        instructor[1] = new Instructor("Joset", "Perez", "2", vector1);
         String[] vector2 = {"Calistenia", "Ejercicios funcionales"};
-        instructor[2] = new Instructor("Lit", "Contreras", "3", vector2);
+        instructor[2] = new Instructor("Mario", "Contreras", "3", vector2);
         String[] vector3 = {"Ejercicios con maquinas", "Ejercicios funcionales"};
-        instructor[3] = new Instructor("Pantheon", "El Aspecto", "4", vector3);
+        instructor[3] = new Instructor("Carlos", "Rojas", "4", vector3);
+    }
+
+    public void customerAuto() {
+        String[] vector = {"Ejercicios con maquinas", "Calistenia"};
+        customer[0] = new Cliente("Luis", "Garcia", "122", 1, vector, "Activo", "Entrenador de Calistenia: Daniel\n"
+                + "Entrenador de Ejercicios con maquinas: Carlos\n");
+        String[] vector2 = {"Calistenia", "Ejercicios funcionales"};
+        customer[1] = new Cliente("Hector", "Cortés", "133", 2, vector2, "Activo", "Entrenador de Calistenia: Joset\n"
+                + "Entrenador de Ejercicios funcionales: Mario\n");
+        customer[2] = new Cliente("Mario", "Mora", "144", 3, vector2, "Activo", "Entrenador de Calistenia: Joset\n"
+                + "Entrenador de Ejercicios funcionales: Mario\n");
+        customer[3] = new Cliente("Nick", "Mendez", "155", 4, vector2, "Activo", "Entrenador de Calistenia: Joset\n"
+                + "Entrenador de Ejercicios funcionales: Mario\n");
+        customer[4] = new Cliente("Bryan", "Matarrita", "166", 5, vector2, "Activo", "Entrenador de Calistenia: Joset\n"
+                + "Entrenador de Ejercicios funcionales: Mario\n");
     }
 
     // Here we going to make the metod that modifier the customer
@@ -344,7 +411,7 @@ public class Mantenimiento {
                 if (customer[i].getID().equals(idClient)) {
                     findCustomer = true;
                     vectorPosition = i;
-                    JOptionPane.showMessageDialog(null, "Cliente encontrado con el ID " + idClient+ ": \n" +customer[i].getName() + " " + customer[i].getLastname());
+                    JOptionPane.showMessageDialog(null, "Cliente encontrado con el ID " + idClient + ": \n" + customer[i].getName() + " " + customer[i].getLastname());
                 }
             }
         }
@@ -353,8 +420,8 @@ public class Mantenimiento {
                     + "\n1. Servicios inscritos"
                     + "\n2. Actividad del cliente"
                     + "\n3. Cambiar instructor"));
-            modifi.modificarcliente(option, customer, vectorPosition, instructor, servicesVector);
-            
+            modifi.modificar(option, customer, vectorPosition, instructor, servicesVector);
+
 //            System.out.println("Verificar cambios");
 //            Cliente clieente = customer[vectorPosition];
 //            String[] guarda = clieente.getServiceSignedUp();
@@ -369,12 +436,175 @@ public class Mantenimiento {
     }
 
     // Here we going to make the metod that modifier the Intructor
-    public void modifierTheInstructor() {
+    public void modifierTheInstructorOrService() {
+        int wanToDo = Integer.parseInt(JOptionPane.showInputDialog("¿Que desea hacer? \n1. Modificar servicios de un instructor\n2. Modificar servicios"));
+        switch (wanToDo) {
+            case 1:
+                boolean findCustomer = false;
+                int vectorPosition = 0;
+                String idInstructor = JOptionPane.showInputDialog(null, "ID del instructor: ");
+                for (int i = 0; i < instructor.length; i++) {
+                    if (instructor[i] != null) {
+                        if (instructor[i].getID().equals(idInstructor)) {
+                            findCustomer = true;
+                            vectorPosition = i;
+                            JOptionPane.showMessageDialog(null, "Instructor encontrado con el ID " + idInstructor + ": \n" + instructor[i].getName() + " " + instructor[i].getLastname());
+                        }
+                    }
+                }
+                if (findCustomer) {
+                    int option = Integer.parseInt(JOptionPane.showInputDialog(null, "¿Desea \n1. Añadir\n2. Borrar\nalgun servicio a este instructor? "));
+                    modifi.modificar(instructor, vectorPosition, option, servicesVector);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Lo siento, no se encontro ningun instructor con"
+                            + "el siguiente ID: \n" + idInstructor);
+                }
+                break;
+            case 2:
+                String find = "";
+                for (int i = 0; i < servicesVector.length; i++) {
+                    find = find + i + ". " + servicesVector[i].getName() + "\n";
+                }
+                int positionOption = Integer.parseInt(JOptionPane.showInputDialog("Estos son los servicios actualmente disponibles: \n" + find + "\n¿Cual deseas modificar?"));
+                modifierTheService(positionOption, 3);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Seleccione una de las opciones mostradas en pantalla.");
+        }
         //No way => No puede ser
+
     }
 
     // Here we going to make the metod that modifier the Service
-    public void modifierTheService() {
+    public void modifierTheService(int positionOption, int wanToDo) {
+        modifi.modificar(instructor, positionOption, wanToDo, servicesVector);
     }
 
+    public void toDoRifa() {
+        dr.randomizer(customer);
+    }
+
+    public void listCustomers() {
+        int option = Integer.parseInt(JOptionPane.showInputDialog("¿Que listado desea generar?\n"
+                + "1. Listado de clientes (Activos e Inactivos)\n"
+                + "2. Generar lista de Servicios asignados a un determinado Instructor\n"
+                + "3. Generar lista de clientes inscritos en un determinado servicio\n"
+                + "4. Listado de clientes que han ganado la rifa"));
+        switch (option) {
+            case 1:
+                System.out.println("CLIENTES ACTUALMENTE INSCRITOS (Activos e Inactivos)\n");
+
+                for (int i = 0; i < customer.length; i++) {
+                    if (customer[i] != null) {
+                        System.out.println("----------------------------------------------------------------------------------------------------------");
+                        System.out.printf("%10s  %10s  %10s  ", "Codigo", "Nombre", "Apellido\n");
+                        Cliente client = customer[i];
+                        String[] customerServices = client.getServiceSignedUp();
+                        String ser = "";
+                        for (String customerService : customerServices) {
+                            if (customerService != null) {
+                                ser = ser + customerService + "\n";
+                            }
+                        }
+                        String schedule = "";
+                        for (String customerService : customerServices) {
+                            if (customerService != null) {
+                                for (int j = 0; j < servicesVector.length; j++) {
+                                    if (servicesVector[j] != null) {
+                                        if (customerService == servicesVector[j].getName()) {
+                                            schedule = schedule + servicesVector[j].getSchedule() + "\n";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        System.out.printf("%10s  %10s  %10s  ", customer[i].getCodeNumber(), customer[i].getName(), customer[i].getLastname() + "\n");
+                        System.out.println("SERVICIOS INSCRITOS: \n"
+                                + ser);
+                        System.out.println("HORARIOS: \n"
+                                + schedule);
+                        System.out.println("INSTRUCTORES: \n"
+                                + customer[i].getInstructor());
+                    }
+                }
+                break;
+            case 2:
+//                String find = "";
+//                for (int i = 0; i < servicesVector.length; i++) {
+//                    find = find + i + ". " + servicesVector[i].getName() + "\n";
+//                }
+                String options = JOptionPane.showInputDialog("ID del instructor");
+                int option1 = 0;
+                boolean find = false;
+                for (int i = 0; i < instructor.length; i++) {
+                    if (instructor[i] != null) {
+                        if (options.equals(instructor[i].getID())) {
+                            option1 = i;
+                            find = true;
+                        }
+                    }
+                }
+                if (find == true) {
+                    searchInstructo(option1, instructor);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontro ningun entrenador con el ID de " + options);
+                }
+
+                break;
+            case 3:
+                String find2 = "";
+                for (int i = 0; i < servicesVector.length; i++) {
+                    find2 = find2 + i + ". " + servicesVector[i].getName() + "\n";
+                }
+                String fin = "";
+                boolean findw = false;
+                int position = Integer.parseInt(JOptionPane.showInputDialog("Estos son los servicios, eliga uno \n"
+                        + "para realizar la busqueda\n" + find2));
+                for (int i = 0; i < customer.length; i++) {
+                    if (customer[i] != null) {
+                        Cliente iss = customer[i];
+                        String[] servicesCustomer = iss.getServiceSignedUp();
+                        for (String elementService : servicesCustomer) {
+                            if (elementService != null) {
+                                if (elementService == servicesVector[position].getName()) {
+                                    fin = fin + customer[i].getName() + " " + customer[i].getLastname() + "\n";
+                                    findw = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (findw) {
+                    JOptionPane.showMessageDialog(null, "Clientes en el servicicio de "
+                            + servicesVector[position].getName()
+                            + "\n" + fin);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Lo siento, no se encontró ningun cliente\ninscrito a "
+                            + servicesVector[position].getName());
+                }
+
+                break;
+            case 4:
+                dr.winnersName(customer);
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+    }
+
+    public void searchInstructo(int position, Instructor[] vector) {
+        Instructor ins = vector[position];
+        String[] services = ins.getServiceAssigned();
+        String ser = "";
+        for (String service : services) {
+            if (service != null) {
+                ser = ser + service + "\n";
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Usted esta viendo la informacion del instructor \n"
+                + instructor[position].getName() + " con ID " + instructor[position].getID() + "\nServicios asignados: \n" + ser);
+
+    }
 }

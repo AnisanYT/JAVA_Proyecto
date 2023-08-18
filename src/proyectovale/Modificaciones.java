@@ -1,11 +1,14 @@
 package proyectovale;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Modificaciones {
 
-    public void modificarcliente(int position, Cliente[] vector, int positionVector, Instructor[] vectorInstructor, servicios[] vectorServicios) {
+    //modifier a customer
+    public void modificar(int position, Cliente[] vector, int positionVector, Instructor[] vectorInstructor, servicios[] vectorServicios) {
         //position, choose in the switch 
         //vector[] is the vector of customer in parameter
         //ID is Customer's ID
@@ -196,8 +199,58 @@ public class Modificaciones {
                     }
                 }
                 break;
+            case 3:
+//                    Instructor inss = vectorInstructor[i];
+//                    String[] container = inss.getServiceAssigned();
+//                    Cliente client = vector[positionVector];
+//                    String[] serviceAssigned = client.getServiceSignedUp();
+                String find = "";
+                String choose = "";
+                Cliente client = vector[positionVector];
+                String[] serviceAssigned = client.getServiceSignedUp();
+                for (int i = 0; i < serviceAssigned.length; i++) {
+                    if (serviceAssigned[i] != null) {
+                        find = "";
+                        for (int j = 0; j < vectorInstructor.length; j++) {
+                            if (vectorInstructor[j] != null) {
+                                Instructor inss = vectorInstructor[j];
+                                String[] container = inss.getServiceAssigned();
+                                if (serviceAssigned[i] != null) {
+                                    for (String valor : container) {
+                                        if (valor != null) {
+                                            if (serviceAssigned[i] == valor) {
+                                                find = find + j + ". " + vectorInstructor[j].getName() + " " + vectorInstructor[j].getLastname() + "\n";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        int option = Integer.parseInt(JOptionPane.showInputDialog(null, "Encontrados en: " + serviceAssigned[i] + "\n" + find));
+                        choose = choose + "Entrenador en " + serviceAssigned[i] + ": " + vectorInstructor[option].getName() + " " + vectorInstructor[option].getLastname() + "\n";
+                        JOptionPane.showMessageDialog(null, choose);
+                    }
+
+                }
+                vector[positionVector].setInstructor(choose);
+                String ser = "";
+                Cliente clients = vector[positionVector];
+                String[] serviceAssigneds = clients.getServiceSignedUp();
+                for (String servicio : serviceAssigneds) {
+                    if (servicio == null) {
+                        System.out.println("");
+                    } else {
+                        ser = ser + servicio + ", ";
+                    }
+                }
+                JOptionPane.showMessageDialog(null,
+                        "¡Estado cambiado!" + "\nNuevos datos: \nCliente: " + vector[positionVector].getName()
+                        + "\nApellido: " + vector[positionVector].getLastname() + "\nNumero de codigo (Para fines de Rifa): " + vector[positionVector].getCodeNumber()
+                        + "\nServicios suscrito: " + ser + "\nEstado: " + vector[positionVector].getState() + "\nInstructor o instructores: \n" + vector[positionVector].getInstructor());
+                break;
+
             default:
-                throw new AssertionError();
+                JOptionPane.showMessageDialog(null, "Inserte una opcion valida.");
         }
     }
 
@@ -212,9 +265,116 @@ public class Modificaciones {
         return newVector;
     }
 
-    public void modificarcliente() {
+    //modifier a instructor
+    public void modificar(Instructor[] instructor, int position, int option, servicios[] servicios) {
+        switch (option) {
+            case 1:
+                String find = "";
+                for (int i = 0; i < servicios.length; i++) {
+                    find = find + i + ". " + servicios[i].getName() + "\n";
+                }
+                Instructor ins = instructor[position];
+                String[] services = ins.getServiceAssigned();
+                String ser = "";
+                for (String valor : services) {
+                    if (valor != null) {
+                        ser = ser + valor + "\n";
+                    }
+                }
+                int positionOption = Integer.parseInt(JOptionPane.showInputDialog("Estos son los servicios actualmente disponibles: \n" + find
+                        + "\n¿Cual desea asignar a este instructor?\n\n** Tome en cuenta que no puede añadir un servicio igual.\nEstos "
+                        + "son los servicios asignados a " + instructor[position].getName() + "  " + instructor[position].getLastname() + "\n" + ser));
+                boolean finded = false;
+                for (String valor : services) {
+                    if (servicios[positionOption].getName() == valor) {
+                        JOptionPane.showMessageDialog(null, "Este instructor ya tiene este servicio. Intente con escoger otro.");
+                        finded = true;
+                    }
+                }
+
+                if (finded == false) {
+                    instructor[position].setServiceAssigned(addData(services, servicios[positionOption].getName()));
+                    Instructor ins2 = instructor[position];
+                    String[] services2 = ins2.getServiceAssigned();
+                    String ser2 = "";
+                    for (String valor : services2) {
+                        if (valor != null) {
+                            ser2 = ser2 + valor + "\n";
+                        }
+                    }
+                    JOptionPane.showMessageDialog(null, "¡Servicio añadido exitosamente!\nNombre: "
+                            + instructor[position].getName() + "\nApellido: " + instructor[position].getLastname() + "\nID: " + instructor[position].getID() + "\n"
+                            + "Servicios: " + ser2 + "\nServicio nuevo a este instructor: " + servicios[positionOption].getName());
+                }
+                break;
+            case 2:
+                Instructor ins2 = instructor[position];
+                String[] services2 = ins2.getServiceAssigned();
+                String ser2 = "";
+                for (int i = 0; i < services2.length; i++) {
+                    ser2 = ser2 + i + ". " + services2[i] + "\n";
+                }
+                int deleteOption = Integer.parseInt(JOptionPane.showInputDialog(null, "Estos son los servicios de " + instructor[position].getName()
+                        + " " + instructor[position].getLastname() + "\n" + ser2));
+                String delete = services2[deleteOption];
+                services2[deleteOption] = null;
+                instructor[position].setServiceAssigned(services2);
+                Instructor ins3 = instructor[position];
+                String[] services3 = ins3.getServiceAssigned();
+                String ser3 = "";
+                for (String valor : services3) {
+                    if (valor != null) {
+                        ser3 = ser3 + valor + "\n";
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "¡Servicio borrado exitosamente!\nNombre: "
+                        + instructor[position].getName() + "\nApellido: " + instructor[position].getLastname() + "\nID: " + instructor[position].getID() + "\n"
+                        + "Servicios: " + ser3 + "\nServicio borrado a este instructor: " + delete);
+                break;
+            case 3:
+                int option4 = Integer.parseInt(JOptionPane.showInputDialog("¿Que desea cambiar de " + servicios[position].getName() + "? \n1. Horario\n2. Precio"));
+                if (option4 == 1) {
+                    String regex = "^[lmkjvsdLMKJVSD]{1}:[ ]*[0-9]{1,2}[ ]*-+[ ]+[0-9]{1,2}$";
+                    Pattern pattern = Pattern.compile(regex);
+                    String schedule = JOptionPane.showInputDialog("¿Cual será el nuevo horario de " + servicios[position].getName() + "?"
+                            + "\nHorario actual: " + servicios[position].getSchedule()
+                            + "\n\n**Tenga en cuenta que debe de tener un formato similar a este: V: 7 - 12"
+                            + "\n\n**Formato de Dias: "
+                            + "\nL: Lunes"
+                            + "\nM: Martes"
+                            + "\nK: Miercoles"
+                            + "\nJ: Jueves"
+                            + "\nV: Viernes"
+                            + "\nS: Sabado"
+                            + "\nD: Domingo");
+                    Matcher matcher = pattern.matcher(schedule);
+                    String scheduleBefore = servicios[position].getSchedule();
+                    if (matcher.matches()) {
+                        servicios[position].setSchedule(schedule);
+                                                JOptionPane.showMessageDialog(null, "¡Horario actualizado!\n"
+                                + "\nServicio: " + servicios[position].getName()
+                                + "\nHorario: " + servicios[position].getSchedule() + "(Actualizado)"
+                                + "\nPrecio: " + servicios[position].getPrice()
+                                + "\n\nHorario anterior: " + scheduleBefore);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Lo siento no se puede, tiene que seguir el formato establecido.");
+                    }
+                } else {
+                    int priceBefore = servicios[position].getPrice();
+                    int price = Integer.parseInt(JOptionPane.showInputDialog("¿Cual será el nuevo precio de este servicio?\n"
+                            + "El precio actual de " + servicios[position].getName() + " es de: " + servicios[position].getPrice()));
+                    servicios[position].setPrice(price);
+                    JOptionPane.showMessageDialog(null, "¡Precio actualizado!\n"
+                            + "\nServicio: " + servicios[position].getName()
+                            + "\nHorario: " + servicios[position].getSchedule()
+                            + "\nPrecio: " + servicios[position].getPrice() + "(Actualizado)"
+                            + "\n\nPrecio anterior: " + priceBefore);
+                }
+                break;
+
+            default:
+                JOptionPane.showMessageDialog(null, "Debe de insertar una opcion valida.");
+        }
     }
 
-    public void modificarcliente(int pos) {
-    }
 }
