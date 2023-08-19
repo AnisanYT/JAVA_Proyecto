@@ -85,7 +85,7 @@ public class Modificaciones {
                         }
                     }
                     vector[positionVector].setInstructor(choose);
-                } else {
+                } else if (wantT == 2) {
                     String find = "";
                     Cliente cl = vector[positionVector];
                     String[] datas = cl.getServiceSignedUp();
@@ -145,6 +145,8 @@ public class Modificaciones {
                     } else {
                         JOptionPane.showMessageDialog(null, "Este cliente ya escogio este servicio, deberia de escoger otro.");
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Inserte una opcion valida.");
                 }
                 break;
             case 2:
@@ -281,30 +283,34 @@ public class Modificaciones {
                         ser = ser + valor + "\n";
                     }
                 }
-                int positionOption = Integer.parseInt(JOptionPane.showInputDialog("Estos son los servicios actualmente disponibles: \n" + find
-                        + "\n¿Cual desea asignar a este instructor?\n\n** Tome en cuenta que no puede añadir un servicio igual.\nEstos "
-                        + "son los servicios asignados a " + instructor[position].getName() + "  " + instructor[position].getLastname() + "\n" + ser));
-                boolean finded = false;
-                for (String valor : services) {
-                    if (servicios[positionOption].getName() == valor) {
-                        JOptionPane.showMessageDialog(null, "Este instructor ya tiene este servicio. Intente con escoger otro.");
-                        finded = true;
-                    }
-                }
-
-                if (finded == false) {
-                    instructor[position].setServiceAssigned(addData(services, servicios[positionOption].getName()));
-                    Instructor ins2 = instructor[position];
-                    String[] services2 = ins2.getServiceAssigned();
-                    String ser2 = "";
-                    for (String valor : services2) {
-                        if (valor != null) {
-                            ser2 = ser2 + valor + "\n";
+                try {
+                    int positionOption = Integer.parseInt(JOptionPane.showInputDialog("Estos son los servicios actualmente disponibles: \n" + find
+                            + "\n¿Cual desea asignar a este instructor?\n\n** Tome en cuenta que no puede añadir un servicio igual.\nEstos "
+                            + "son los servicios asignados a " + instructor[position].getName() + "  " + instructor[position].getLastname() + "\n" + ser));
+                    boolean finded = false;
+                    for (String valor : services) {
+                        if (servicios[positionOption].getName() == valor) {
+                            JOptionPane.showMessageDialog(null, "Este instructor ya tiene este servicio. Intente con escoger otro.");
+                            finded = true;
                         }
                     }
-                    JOptionPane.showMessageDialog(null, "¡Servicio añadido exitosamente!\nNombre: "
-                            + instructor[position].getName() + "\nApellido: " + instructor[position].getLastname() + "\nID: " + instructor[position].getID() + "\n"
-                            + "Servicios: " + ser2 + "\nServicio nuevo a este instructor: " + servicios[positionOption].getName());
+
+                    if (finded == false) {
+                        instructor[position].setServiceAssigned(addData(services, servicios[positionOption].getName()));
+                        Instructor ins2 = instructor[position];
+                        String[] services2 = ins2.getServiceAssigned();
+                        String ser2 = "";
+                        for (String valor : services2) {
+                            if (valor != null) {
+                                ser2 = ser2 + valor + "\n";
+                            }
+                        }
+                        JOptionPane.showMessageDialog(null, "¡Servicio añadido exitosamente!\nNombre: "
+                                + instructor[position].getName() + "\nApellido: " + instructor[position].getLastname() + "\nID: " + instructor[position].getID() + "\n"
+                                + "Servicios: " + ser2 + "\nServicio nuevo a este instructor: " + servicios[positionOption].getName());
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    JOptionPane.showMessageDialog(null, "Parece que hubo un error " + e + "\nIntentelo otra vez.");
                 }
                 break;
             case 2:
@@ -312,26 +318,35 @@ public class Modificaciones {
                 String[] services2 = ins2.getServiceAssigned();
                 String ser2 = "";
                 for (int i = 0; i < services2.length; i++) {
-                    ser2 = ser2 + i + ". " + services2[i] + "\n";
-                }
-                int deleteOption = Integer.parseInt(JOptionPane.showInputDialog(null, "Estos son los servicios de " + instructor[position].getName()
-                        + " " + instructor[position].getLastname() + "\n" + ser2));
-                String delete = services2[deleteOption];
-                services2[deleteOption] = null;
-                instructor[position].setServiceAssigned(services2);
-                Instructor ins3 = instructor[position];
-                String[] services3 = ins3.getServiceAssigned();
-                String ser3 = "";
-                for (String valor : services3) {
-                    if (valor != null) {
-                        ser3 = ser3 + valor + "\n";
+                    if (services2[i] != null) {
+                        ser2 = ser2 + i + ". " + services2[i] + "\n";
                     }
                 }
-                JOptionPane.showMessageDialog(null, "¡Servicio borrado exitosamente!\nNombre: "
-                        + instructor[position].getName() + "\nApellido: " + instructor[position].getLastname() + "\nID: " + instructor[position].getID() + "\n"
-                        + "Servicios: " + ser3 + "\nServicio borrado a este instructor: " + delete);
+
+                try {
+                    int deleteOption = Integer.parseInt(JOptionPane.showInputDialog(null, "Estos son los servicios de " + instructor[position].getName()
+                            + " " + instructor[position].getLastname() + "\n" + ser2 + "\n¿Cual desea borrar?"));
+                    String delete = services2[deleteOption];
+                    services2[deleteOption] = null;
+                    instructor[position].setServiceAssigned(services2);
+                    Instructor ins3 = instructor[position];
+                    String[] services3 = ins3.getServiceAssigned();
+                    String ser3 = "";
+                    for (String valor : services3) {
+                        if (valor != null) {
+                            ser3 = ser3 + valor + "\n";
+                        }
+                    }
+                    JOptionPane.showMessageDialog(null, "¡Servicio borrado exitosamente!\nNombre: "
+                            + instructor[position].getName() + "\nApellido: " + instructor[position].getLastname() + "\nID: " + instructor[position].getID() + "\n"
+                            + "Servicios: " + ser3 + "\nServicio borrado a este instructor: " + delete);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    JOptionPane.showMessageDialog(null, "Parece que hubo un error: " + e + "\nIntentalo otra vez.");
+                }
+
                 break;
             case 3:
+                try {
                 int option4 = Integer.parseInt(JOptionPane.showInputDialog("¿Que desea cambiar de " + servicios[position].getName() + "? \n1. Horario\n2. Precio"));
                 if (option4 == 1) {
                     String regex = "^[lmkjvsdLMKJVSD]{1}:[ ]*[0-9]{1,2}[ ]*-+[ ]+[0-9]{1,2}$";
@@ -351,7 +366,7 @@ public class Modificaciones {
                     String scheduleBefore = servicios[position].getSchedule();
                     if (matcher.matches()) {
                         servicios[position].setSchedule(schedule);
-                                                JOptionPane.showMessageDialog(null, "¡Horario actualizado!\n"
+                        JOptionPane.showMessageDialog(null, "¡Horario actualizado!\n"
                                 + "\nServicio: " + servicios[position].getName()
                                 + "\nHorario: " + servicios[position].getSchedule() + "(Actualizado)"
                                 + "\nPrecio: " + servicios[position].getPrice()
@@ -359,7 +374,7 @@ public class Modificaciones {
                     } else {
                         JOptionPane.showMessageDialog(null, "Lo siento no se puede, tiene que seguir el formato establecido.");
                     }
-                } else {
+                } else if (option4 == 2) {
                     int priceBefore = servicios[position].getPrice();
                     int price = Integer.parseInt(JOptionPane.showInputDialog("¿Cual será el nuevo precio de este servicio?\n"
                             + "El precio actual de " + servicios[position].getName() + " es de: " + servicios[position].getPrice()));
@@ -369,9 +384,13 @@ public class Modificaciones {
                             + "\nHorario: " + servicios[position].getSchedule()
                             + "\nPrecio: " + servicios[position].getPrice() + "(Actualizado)"
                             + "\n\nPrecio anterior: " + priceBefore);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Tiene que proporcionar una opcion correta");
                 }
-                break;
-
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Parece que hubo un error: " + e + "\nIntentalo otra vez.");
+            }
+            break;
             default:
                 JOptionPane.showMessageDialog(null, "Debe de insertar una opcion valida.");
         }
