@@ -1,2 +1,2 @@
 # JAVA_Proyecto
-Here is the JAVA project's valery
+Here is the JAVA valery's project
