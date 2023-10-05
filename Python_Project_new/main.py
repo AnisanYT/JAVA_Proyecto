@@ -6,5 +6,18 @@ if __name__ == '__main__':
     print("┌─────────────────────────────────────────────────────────────┐")
     instancia.impresionDeCafe()
     print("└─────────────────────────────────────────────────────────────┘")
-    eleccion = int(input("Selecciona una de las opciones para mostrarte mas detalles:"))
-    instancia.showDetails(eleccion)
+    print("¿Què deseas hacer?")#☕
+    print("1. Ver màs informacion sobre los cafè")
+    print("2. Añadir mas productos (Necesitas ser el dueño 🎶)")
+    print("3. Borrar productos (Necestias ser el dueño 🎶)")
+    eleccion = int(input("Quiero la opciòn nùmero "))
+    if eleccion == 1:
+        print("┌─────────────────────────────────────────────────────────────┐")
+        instancia.impresionDeCafe()
+        print("└─────────────────────────────────────────────────────────────┘")
+    elif eleccion == 2:
+        instancia.addNewProduct()
+    else:
+        print("Aquì se borran productos.")
+    #eleccion = int(input("Selecciona una de las opciones para mostrarte mas detalles:"))
+    #instancia.showDetails(eleccion)
