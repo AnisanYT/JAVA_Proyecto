@@ -16,8 +16,6 @@ officialVector = np.append(officialVector, lista1)
 class procesos():
     def impresionDeCafe(self):
         aux = 0
-        print(" Hola, es un placer atenderte, aqui te muestro \n"
-              " todos los cafè que tenemos disponibles: ")
         for i in officialVector:
             print(f"    {aux} . {i.get_coffeName()}") #No es necesario darle la posicion pues "i" recoge los datos
             aux += 1
@@ -35,6 +33,7 @@ class procesos():
             print(f'    ● Textura: {officialVector[aux].get_textura()}')
             print(f'    ● Su aroma es de: {officialVector[aux].get_aroma()}')
             print(f'    ● Sabor a: {officialVector[aux].get_sabor()}')
+            input('       Presiona ENTER para continuar.')
             print("└─────────────────────────────────────────────────────────────┘")
         else:
             print("┌─────────────────────────────────────────────────────────────┐")
@@ -68,7 +67,44 @@ class procesos():
         officialVector = np.append(officialVector ,lista)
         print("\r¡Listo! Ya esta registrado. ☺")
         print("└─────────────────────────────────────────────────────────────┘")
+    def deleteProduct(self, posicion):
+        global officialVector
+        tamano = len(officialVector)
+        tamanoIndices = len(posicion)
 
-
-
-
+        if tamanoIndices > tamano:
+            print("┌─────────────────────────────────────────────────────────────┐")
+            print(f' Vaya, la cantidad de productos que quieres borrar es mucho \n'
+                  ' mas grande que la cantidad de productos existentes. \n'
+                  f' Para que te des una idea, existen solo {tamano} productos en\n'
+                  f' inventario y tu quieres borrar {tamanoIndices}')
+            print("└─────────────────────────────────────────────────────────────┘")
+        else:
+            aux = True
+            for i in posicion:
+                if i > tamano-1:
+                    aux = False
+            if  aux == True:
+                print("\rBorrando |ׁׁׁׁׁ", end='', flush=True)
+                t.sleep(0.5)
+                print("\rBorrando  ̸", end='', flush=True)
+                t.sleep(0.5)
+                print("\rBorrando  ̶", end='', flush=True)
+                t.sleep(0.5)
+                print("\rBorrando \\", end='', flush=True)
+                t.sleep(0.5)
+                print("\rBorrando |ׁׁׁׁׁ", end='', flush=True)
+                t.sleep(0.5)
+                print("\rBorrando  ̸", end='', flush=True)
+                t.sleep(0.5)
+                print("\rBorrando  ̶", end='', flush=True)
+                t.sleep(0.5)
+                print("\rBorrando \\", end='', flush=True)
+                t.sleep(0.5)
+                officialVector = np.delete(officialVector, posicion)
+                print("\r¡Borrado exitosamente!")
+            else:
+                print("┌─────────────────────────────────────────────────────────────┐")
+                print(' Vaya, parece que hubo un error. Puede que seba a que\n'
+                      ' hay una posicion que no existe dentro de los productos\n'
+                      ' que quieres borrar.')
