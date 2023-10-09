@@ -51,7 +51,7 @@ class procesos():
         aroma = input(" ► Me gustarìa saber a que huele: ")
         sabor = input(" ► ¿Y a que sabe? ")
         textura = input(" ► ¿Cual es su textura? ")
-        precio = int(input("    ►¿Cual serà el precio? "))
+        precio = int(input(" ►¿Cual serà el precio? "))
         time_wait = rd.randrange(3, 6) #De 3 a 5
         for i in range(time_wait):
             if  i % 2 == 0:
