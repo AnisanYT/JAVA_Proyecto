@@ -5,8 +5,9 @@ import numpy as np
 listaDeDientesNamesSuperior = ['Incisivo Central', 'Canino', 'Segundo pré molar', 'Segundo molar', 'Terceiro molar', 'primeiro molar', 'primero pré molar', 'incisivo lateral']
 listaDeDientesNamesInferior = ['Segundo molar', 'Segundo pré molar', 'canino', 'incisivo central', 'incisivo lateral', 'primeiro pré molar', 'terceiro molar']
 
-listaCompleta = []
+
 def initCompleteList():
+        listaCompleta = []
         for i in listaDeDientesNamesSuperior:
               nombreDiente = i
               posicionEnArco = "arco superior"
@@ -23,15 +24,16 @@ def initCompleteList():
               extraciones = "Sin extracion"
               limpieza = "Sin limpieza"
               listaCompleta.append(dientes(nombreDiente=nombreDiente, posicionEnArco=posicionEnArco, tratamiento=tratamiento, operaciones=operaciones, extraciones=extraciones, limpieza=limpieza))
+        return listaCompleta
                         
 #for i in listaCompleta:
 #     print(i.get_nombreDiente(), i.get_posicionEnArco()) 
 listaDientes = [dientes(nombreDiente="canino", posicionEnArco="arco superior", tratamiento="Sin tratamiento por el momento", operaciones="Sin operaciones por el momento", extraciones="Sin extracion", limpieza="Sin limpieza")]
-lista = [persona(nombre= "Mateo", apellido="Mendez", identificacion="0123456", telefono="22920921", email="mendez21@gmail.com", vectorDientes= listaCompleta)]
+lista = [persona(nombre= "Mateo", apellido="Mendez", identificacion="0123456", telefono="22920921", email="mendez21@gmail.com", vectorDientes= initCompleteList())]
 
 cliente = np.array(lista)
 
-#listaAuxiliar[0].set_tratamiento("Tratamiento de los God papi")
+#listaAuxiliar[0].set_tratamiento("Tratamiento de bueno ")
 
 def function():
         #print(cliente[0])
@@ -40,19 +42,19 @@ def function():
         for i in cliente:
               if i.get_identificacion() == id:
                     encontrado = True
-                    listas = i.get_vectorDientes()
+                    listasDientesw = i.get_vectorDientes()
                     print("Lista de dientes de ", i.get_nombre(), "\nIdentificación: ", i.get_identificacion())
                     contador = 0
-                    for o in listas:
+                    for o in listasDientesw:
                           print(contador, o.get_nombreDiente())
                           contador += 1
                     opcionDienteShow = int(input("¿Cual desea ver?: "))
-                    print("Esta es la informacion sobre: ", listas[opcionDienteShow].get_nombreDiente())
-                    print("Posicion del diente: ", listas[opcionDienteShow].get_posicionEnArco())
-                    print("Tratamiento: ", listas[opcionDienteShow].get_tratamiento())
-                    print("Operaciones: ", listas[opcionDienteShow].get_operaciones())
-                    print("Extraciones: ", listas[opcionDienteShow].get_extracciones())
-                    print("Limpieza: ", listas[opcionDienteShow].get_limpieza())
+                    print("Esta es la informacion sobre: ", listasDientesw[opcionDienteShow].get_nombreDiente())
+                    print("Posicion del diente: ", listasDientesw[opcionDienteShow].get_posicionEnArco())
+                    print("Tratamiento: ", listasDientesw[opcionDienteShow].get_tratamiento())
+                    print("Operaciones: ", listasDientesw[opcionDienteShow].get_operaciones())
+                    print("Extraciones: ", listasDientesw[opcionDienteShow].get_extracciones())
+                    print("Limpieza: ", listasDientesw[opcionDienteShow].get_limpieza())
      
                     
         #listas = cliente[0].get_vectorDientes() #Primero, lo que tengo que hacer es guardar en una variable el vector dentro de del vector jaja
@@ -105,8 +107,19 @@ def editar():
                           else:     
                                 newEdi = input("Escriba las nuevas notas a las extracciones: \n- ")
                                 listas[opcionDienteEdit].set_extracciones(newEdi)
-                                print(listas[opcionDienteEdit].get_nombreDiente())
                                 print(listas[opcionDienteEdit].get_extracciones())
+                    else:
+                          if opcionDeleteCompleteOrNot == 1:
+                                aux = listas[opcionDienteEdit].get_limpieza()
+                                newEdi = input("Escriba las nuevas notas de limpieza: \n- ")
+                                newEditForUpdate = aux +"\n"+ newEdi
+                                listas[opcionDienteEdit].set_limpieza(newEditForUpdate)
+                                print(listas[opcionDienteEdit].get_limpieza())
+                          else:     
+                                newEdi = input("Escriba las nuevas notas a las extracciones: \n- ")
+                                listas[opcionDienteEdit].set_limpieza(newEdi)
+                                print(listas[opcionDienteEdit].get_limpieza())
+                     
                           
 
 
@@ -114,17 +127,28 @@ def editar():
 
         
 if __name__ == '__main__':
-    initCompleteList()
-    editar()
+    
     #listaAuxiliar = cliente[0].get_vectorDientes()
     #listaAuxiliar[0].set_tratamiento("Tratamiento ss")
     while True:
-          opcion = int(input("Bienvenido.\n¿Qué desea hacer?\n1. Añadir un nuevo pasciente. \n2. Ver informacion de pasciente.\n3. Salir."))
+          opcion = int(input("Bienvenido.\n¿Qué desea hacer?\n1. Añadir un nuevo pasciente. \n2. Ver informacion de pasciente. \n3. Editar \n4. Salir. \n - "))
           if opcion == 1:
-                print("Aquí se podra añadir nuevos pascientes.")
+                nombre = input("Inserte el nombre: ")
+                apellido = input("Apellido: ")
+                ids = input("Identificación: ")
+                telefono = input("Telefono: ")
+                email = input("Correo Electronico: ")
+                listaCliente = [persona(nombre= nombre, apellido=apellido, identificacion=ids, telefono=telefono, email=email, vectorDientes= initCompleteList())]
+                cliente = np.append(cliente, listaCliente)
+                iFChange = int(input("¿Quieres cambiar algo?: \n1. Si \n2. No"))
+                if iFChange == 1:
+                      editar()
           elif opcion == 2:
                 function()
-          else: 
+          elif opcion == 3: 
+                editar()
+          else:
                 break
+
     #for i in listaCompleta:
     #      print(i.get_nombreDiente(), i.get_posicionEnArco()) 
