@@ -71,13 +71,51 @@ def editar():
                           print(contador, o.get_nombreDiente())
                           contador += 1
                     opcionDienteEdit = int(input("¿Cual desea editar?: ")) #Posicion de diente dentro del vector
-                    opcionDeleteCompleteOrNot = int(input("¿Desea borrar todo el registro hasta el momento o añadir?")) 
+                    opcionDeleteCompleteOrNot = int(input("¿Desea borrar todo el registro hasta el momento o añadir?\n1. Añadir\n2. Borrar")) 
                     opcionChange = int(input("¿Qué aspecto desea editar?: \n1. Tratamiento\n2. Operaciones\n3. Extraciones\n4. Limpieza"))
+                    if opcionChange == 1:
+                          if opcionDeleteCompleteOrNot == 1:
+                                aux = listas[opcionDienteEdit].get_tratamiento()
+                                newEdi = input("Escriba las nuevas notas al tratamiento: \n- ")
+                                newEditForUpdate = aux +"\n"+ newEdi
+                                listas[opcionDienteEdit].set_tratamiento(newEditForUpdate)
+                                print(listas[opcionDienteEdit].get_tratamiento())
+                          else:     
+                                newEdi = input("Escriba las nuevas notas al tratamiento: \n- ")
+                                listas[opcionDienteEdit].set_tratamiento(newEdi)
+                                print(listas[opcionDienteEdit].get_tratamiento())
+                    elif opcionChange == 2:
+                          if opcionDeleteCompleteOrNot == 1:
+                                aux = listas[opcionDienteEdit].get_operaciones()
+                                newEdi = input("Escriba las nuevas notas a las operaciones: \n- ")
+                                newEditForUpdate = aux +"\n"+ newEdi
+                                listas[opcionDienteEdit].set_tratamiento(newEditForUpdate)
+                                print(listas[opcionDienteEdit].get_operaciones())
+                          else:     
+                                newEdi = input("Escriba las nuevas notas a las operaciones: \n- ")
+                                listas[opcionDienteEdit].set_operaciones(newEdi)
+                                print(listas[opcionDienteEdit].get_operaciones())
+                    elif opcionChange == 3:
+                          if opcionDeleteCompleteOrNot == 1:
+                                aux = listas[opcionDienteEdit].get_extracciones()
+                                newEdi = input("Escriba las nuevas notas a las extracciones: \n- ")
+                                newEditForUpdate = aux +"\n"+ newEdi
+                                listas[opcionDienteEdit].set_extracciones(newEditForUpdate)
+                                print(listas[opcionDienteEdit].get_extracciones())
+                          else:     
+                                newEdi = input("Escriba las nuevas notas a las extracciones: \n- ")
+                                listas[opcionDienteEdit].set_extracciones(newEdi)
+                                print(listas[opcionDienteEdit].get_nombreDiente())
+                                print(listas[opcionDienteEdit].get_extracciones())
+                          
+
+
         
 
         
 if __name__ == '__main__':
     initCompleteList()
+    editar()
     #listaAuxiliar = cliente[0].get_vectorDientes()
     #listaAuxiliar[0].set_tratamiento("Tratamiento ss")
     while True:

@@ -41,7 +41,7 @@ class dientes():
         self._operaciones = nuevas_operaciones
 
     def set_extracciones(self, nuevas_extracciones):
-        self._extracciones = nuevas_extracciones
+        self._extraciones = nuevas_extracciones
 
     def set_limpieza(self, nueva_limpieza):
         self._limpieza = nueva_limpieza
