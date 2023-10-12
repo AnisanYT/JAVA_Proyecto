@@ -52,6 +52,15 @@ def calculo():
     varRegular = 0
     varMalo = 0
     varMuyMalo = 0
+    #Variables
+    prExcelente = 0
+    prMuyBueno = 0
+    prBueno = 0
+    prRegular = 0
+    prMalo = 0
+    prMuyMalo = 0
+    prSI=0
+    prNO=0
     print("Estos son los profesores disponibles para realizarle un calculo estadistico: ")
     nombreDeProfesor = imprNombre()
     for i in vector:
@@ -61,8 +70,14 @@ def calculo():
                 contadorYes += 1
             else:
                 contadorNo += 1
-    prSI = (contadorYes / contador) * 100
-    prNO = (contadorNo / contador) * 100
+    try:
+        prSI = (contadorYes / contador) * 100
+    except:
+        pass
+    try:
+     prNO = (contadorNo / contador) * 100
+    except:
+        pass
     for i in vector:
         #Excelente, Muy bueno, Bueno, Regular, Malo, Muy malo
         if nombreDeProfesor == i.get_nombre():
@@ -78,12 +93,30 @@ def calculo():
                 varMalo +=1
             else:
                 varMuyMalo +=1
-    prExcelente = (varExcelente / contador) * 100
-    prMuyBueno = (varMuyBueno / contador) * 100
-    prBueno = (varBueno / contador) * 100
-    prRegular = (varRegular / contador) * 100
-    prMalo = (varMalo / contador) * 100
-    prMuyMalo = (varMuyMalo / contador) * 100
+    try:
+        prExcelente = (varExcelente / contador) * 100
+    except:
+     pass
+    try:
+        prMuyBueno = (varMuyBueno / contador) * 100
+    except:
+     pass
+    try:
+        prBueno = (varBueno / contador) * 100
+    except:
+     pass
+    try:
+        prRegular = (varRegular / contador) * 100
+    except:
+     pass
+    try:
+        prMalo = (varMalo / contador) * 100
+    except:
+     pass
+    try:
+        prMuyMalo = (varMuyMalo / contador) * 100
+    except:
+        pass
 
 
 
