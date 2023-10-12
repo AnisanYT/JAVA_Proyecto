@@ -96,23 +96,23 @@ def calculo():
     try:
         prExcelente = (varExcelente / contador) * 100
     except:
-     pass
+        pass
     try:
         prMuyBueno = (varMuyBueno / contador) * 100
     except:
-     pass
+        pass
     try:
         prBueno = (varBueno / contador) * 100
     except:
-     pass
+        pass
     try:
         prRegular = (varRegular / contador) * 100
     except:
-     pass
+        pass
     try:
         prMalo = (varMalo / contador) * 100
     except:
-     pass
+        pass
     try:
         prMuyMalo = (varMuyMalo / contador) * 100
     except:
