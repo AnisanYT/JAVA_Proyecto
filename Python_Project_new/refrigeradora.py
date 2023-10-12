@@ -4,7 +4,7 @@ class refri(productos):
         super().__init__(marca, modelo, precio, base, color, consumoEnergetico, peso)
         self._puertas = puertas
         self._pulgadas = pulgadas
-        self._puesCub = piesCub
+        self._piesCub = piesCub
         self._freezer = freezer
         
     def get_puertas(self):
