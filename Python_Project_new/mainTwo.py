@@ -34,7 +34,7 @@ def imprNombre():
                 vectorNombres = np.append(vectorNombres, i.get_nombre())
     auxContador = 0
     for i in vectorNombres:
-        print(auxContador, i)
+        print("- ", i)
         auxContador += 1
     profesorsName = input("Escriba el nombre del profesor: ")
     return profesorsName
