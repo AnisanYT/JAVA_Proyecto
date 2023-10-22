@@ -211,8 +211,9 @@ try:
     workbook = openpyxl.load_workbook(rutaInventari)
 except FileNotFoundError:
     workbook = openpyxl.Workbook()
-
+#Creo una nueva hoja, donde le pongo el nombre de Datos
 nuevaHoja = workbook.create_sheet(title="Datos")
+#A1 corresponde en Excel a la posicion como tal de Columna y Fila
 nuevaHoja['A1'] = 'Correctamente'
 nuevaHoja['B1'] = 'Erroneos'
 nuevaHoja['C1'] = 'Procesados en total'
